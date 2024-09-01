@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, Image, FlatList, StyleSheet, TouchableOpacity, Alert } from 'react-native';
+import { View, Text, Image, FlatList, StyleSheet, TouchableOpacity, Alert, SafeAreaView } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 
 const properties = [
@@ -53,50 +53,62 @@ const HomeScreen = ({ navigation }) => {
     );
 
     return (
-        <View style={styles.container}>
-            {/* Header */}
-            <View style={styles.header}>
-                <Ionicons name="menu" size={28} color="black" />
-                <View style={styles.locationContainer}>
-                    <Text style={styles.headerText}>Current Location</Text>
-                    <View style={styles.locationRow}>
-                        <Ionicons name="location-sharp" size={16} color="green" />
-                        <Text style={styles.locationText}>Dhobidhara</Text>
+        <SafeAreaView style={styles.safeArea}>
+            <View style={styles.container}>
+                {/* Header */}
+                <View style={styles.header}>
+                    <Ionicons name="menu" size={28} color="black" />
+                    <View style={styles.locationContainer}>
+                        <Text style={styles.headerText}>Current Location</Text>
+                        <View style={styles.locationRow}>
+                            <Ionicons name="location-sharp" size={16} color="green" />
+                            <Text style={styles.locationText}>Dhobidhara</Text>
+                        </View>
                     </View>
                 </View>
+
+                <Text style={styles.sectionTitle}>Properties you have added</Text>
+
+                {/* Property List */}
+                <FlatList
+                    data={properties}
+                    renderItem={renderItem}
+                    keyExtractor={item => item.id}
+                    contentContainerStyle={styles.listContainer}
+                />
+
+                {/* Bottom Navigation */}
+                <View style={styles.bottomNavigation}>
+                    <Ionicons name="home" size={24} color="green" />
+                    <Ionicons name="add-circle" size={24} color="black" />
+                    <Ionicons name="list" size={24} color="black" />
+                    <Ionicons name="person" size={24} color="black" />
+                </View>
             </View>
-
-            <Text style={styles.sectionTitle}>Properties you have added</Text>
-
-            {/* Property List */}
-            <FlatList
-                data={properties}
-                renderItem={renderItem}
-                keyExtractor={item => item.id}
-                contentContainerStyle={styles.listContainer}
-            />
-
-        </View>
+        </SafeAreaView>
     );
 };
 
 const styles = StyleSheet.create({
+    safeArea: {
+        flex: 1,
+        backgroundColor: '#f5f5f5',
+    },
     container: {
         flex: 1,
         backgroundColor: '#f5f5f5',
     },
     header: {
-        padding: 10,
+        padding: 16,
         backgroundColor: '#e0e0ff',
         flexDirection: 'row',
         alignItems: 'center',
     },
     locationContainer: {
-        padding: 20,
         marginLeft: 8,
     },
     headerText: {
-        fontSize: 15,
+        fontSize: 12,
         color: 'grey',
     },
     locationRow: {
