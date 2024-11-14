@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, Image, FlatList, StyleSheet, TouchableOpacity, Alert, SafeAreaView } from 'react-native';
+import { View, Text, Image, FlatList, StyleSheet, TouchableOpacity, SafeAreaView } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 
 const properties = [
@@ -15,7 +15,7 @@ const properties = [
         id: '2',
         type: '1BHK Flat',
         location: 'Lalitpur-03, Nakhu',
-        price: '5,000/Month',
+        price: '12,000/Month',
         status: 'Available',
         image: 'https://cf.bstatic.com/xdata/images/hotel/max1024x768/347702650.jpg?k=914706a5152989aacc5c1e9de70820257ab46c2749a2a7b1638dca1d58a948e4&o=&hp=1',
     },
@@ -23,15 +23,40 @@ const properties = [
         id: '3',
         type: '1BHK Flat',
         location: 'Kirtipur-03, Dhalpa',
-        price: '7,000/Month',
+        price: '10,000/Month',
         status: 'Booked',
         image: 'https://nepalpropertybazaar.com/wp-content/uploads/2024/08/1BK-Top-Floor-Brand-New-Flat-Rent-in-Bhaisepati-Nakkhu-Lalitpur-2-592x444.jpg',
+    },
+    {
+        id: '4',
+        type: '2BHK Flat',
+        location: 'Bhaktapur, Suryabinayak',
+        price: '18,000/Month',
+        status: 'Available',
+        image: 'https://i.ytimg.com/vi/rveZhUyxC-c/maxresdefault.jpg',
+    },
+    {
+        id: '5',
+        type: 'Studio Apartment',
+        location: 'Maharajgunj, Kathmandu',
+        price: '25000/Month',
+        status: 'Booked',
+        image: 'https://cf.bstatic.com/xdata/images/hotel/max1024x768/460012103.jpg?k=af0af68579988abb81deb922c23653b2cc6749b4d547602c03b8f4186f126af5&o=&hp=1',
+    },
+    {
+        id: '6',
+        type: '2BHK Flat',
+        location: 'Lalitpur, Satdobato',
+        price: '20,000/Month',
+        status: 'Available',
+        image: 'https://i.pinimg.com/736x/84/cd/f5/84cdf50868238a908da5c48cd3ba9483.jpg',
     },
 ];
 
 const HomeScreen = ({ navigation }) => {
     const handlePropertyPress = (item) => {
-        Alert.alert('Property Clicked', `You clicked on ${item.type}`);
+        // Navigate to PropertyDescription screen and pass property data
+        navigation.navigate('PropertyDescription', { property: item });
     };
 
     const renderItem = ({ item }) => (
@@ -54,37 +79,25 @@ const HomeScreen = ({ navigation }) => {
 
     return (
         <SafeAreaView style={styles.safeArea}>
-            <View style={styles.container}>
-                {/* Header */}
-                <View style={styles.header}>
-                    <Ionicons name="menu" size={28} color="black" />
-                    <View style={styles.locationContainer}>
-                        <Text style={styles.headerText}>Current Location</Text>
-                        <View style={styles.locationRow}>
-                            <Ionicons name="location-sharp" size={16} color="green" />
-                            <Text style={styles.locationText}>Dhobidhara</Text>
-                        </View>
+            <View style={styles.header}>
+                <View style={styles.locationContainer}>
+                    <Text style={styles.headerText}>Current Location</Text>
+                    <View style={styles.locationRow}>
+                        <Ionicons name="location-sharp" size={16} color="green" />
+                        <Text style={styles.locationText}>Dhobidhara, Kathmandu</Text>
                     </View>
                 </View>
-
-                <Text style={styles.sectionTitle}>Properties you have added</Text>
-
-                {/* Property List */}
-                <FlatList
-                    data={properties}
-                    renderItem={renderItem}
-                    keyExtractor={item => item.id}
-                    contentContainerStyle={styles.listContainer}
-                />
-
-                {/* Bottom Navigation */}
-                <View style={styles.bottomNavigation}>
-                    <Ionicons name="home" size={24} color="green" />
-                    <Ionicons name="add-circle" size={24} color="black" />
-                    <Ionicons name="list" size={24} color="black" />
-                    <Ionicons name="person" size={24} color="black" />
-                </View>
             </View>
+
+            <FlatList
+                data={properties}
+                ListHeaderComponent={
+                    <Text style={styles.propertiesHeader}>Properties you have added</Text>
+                }
+                renderItem={renderItem}
+                keyExtractor={item => item.id}
+                contentContainerStyle={styles.listContainer}
+            />
         </SafeAreaView>
     );
 };
@@ -94,22 +107,26 @@ const styles = StyleSheet.create({
         flex: 1,
         backgroundColor: '#f5f5f5',
     },
-    container: {
-        flex: 1,
-        backgroundColor: '#f5f5f5',
-    },
     header: {
-        padding: 16,
-        backgroundColor: '#e0e0ff',
+        paddingTop: 70,
+        paddingBottom: 18,
+        paddingHorizontal: 16,
         flexDirection: 'row',
         alignItems: 'center',
+        backgroundColor: '#b5c7eb',
+        position: 'absolute',
+        top: 0,
+        left: 0,
+        right: 0,
+        zIndex: 1,
     },
     locationContainer: {
-        marginLeft: 8,
+        marginLeft: 5,
     },
     headerText: {
-        fontSize: 12,
-        color: 'grey',
+        fontSize: 16,
+        marginBottom: 6,
+        color: 'green',
     },
     locationRow: {
         flexDirection: 'row',
@@ -117,18 +134,20 @@ const styles = StyleSheet.create({
         marginTop: 2,
     },
     locationText: {
-        fontSize: 16,
+        fontSize: 15,
         color: 'black',
+        fontWeight: 'normal',
         marginLeft: 4,
     },
-    sectionTitle: {
-        fontSize: 18,
-        fontWeight: 'bold',
-        paddingHorizontal: 16,
-        marginVertical: 10,
-    },
     listContainer: {
-        padding: 16,
+        paddingTop: 95,
+        paddingHorizontal: 16,
+    },
+    propertiesHeader: {
+        fontSize: 20,
+        fontWeight: 'bold',
+        marginBottom: 18,
+        color: '#333',
     },
     propertyContainer: {
         flexDirection: 'row',
@@ -169,12 +188,6 @@ const styles = StyleSheet.create({
         marginTop: 4,
         fontSize: 14,
         fontWeight: 'bold',
-    },
-    bottomNavigation: {
-        flexDirection: 'row',
-        justifyContent: 'space-around',
-        backgroundColor: '#e0e0e0',
-        padding: 12,
     },
 });
 

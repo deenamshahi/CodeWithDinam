@@ -1,169 +1,77 @@
 import React from 'react';
-import { View, Text, Image, FlatList, StyleSheet, TouchableOpacity, Alert } from 'react-native';
-import { Ionicons } from '@expo/vector-icons';
+import { NavigationContainer } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack'; // Use the basic createStackNavigator instead of native stack
+import BottomTabNavigator from './src/BottomTabNavigator/BottomTabNavigator';
+import ProfileScreen from './src/ProfileScreen/ProfileScreen';
+import EditProfileScreen from './src/ProfileScreen/EditProfileScreen';
+import ChangePasswordScreen from './src/ProfileScreen/ChangePasswordScreen';
+import SettingsScreen from './src/ProfileScreen/SettingsScreen';
+import AboutUsScreen from './src/ProfileScreen/AboutUsScreen';
+import PrivacyPolicyScreen from './src/ProfileScreen/PrivacyPolicyScreen';
+import PropertyDescription from './src/PropertyDescription/PropertyDescription'; // Import the PropertyDescription screen
+import EditPropertyScreen from './src/PropertyDescription/EditPropertyScreen'; // Import the EditPropertyScreen
 
-const properties = [
-    {
-        id: '1',
-        type: '1 Room',
-        location: 'Lalitpur, Ekantakuna',
-        price: '7,000/Month',
-        status: 'Available',
-        image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTmySnbVFFNpt7pN_bGzGHhxa6AUKpU88CHTg&s',
-    },
-    {
-        id: '2',
-        type: '1BHK Flat',
-        location: 'Lalitpur-03, Nakhu',
-        price: '5,000/Month',
-        status: 'Available',
-        image: 'https://cf.bstatic.com/xdata/images/hotel/max1024x768/347702650.jpg?k=914706a5152989aacc5c1e9de70820257ab46c2749a2a7b1638dca1d58a948e4&o=&hp=1',
-    },
-    {
-        id: '3',
-        type: '1BHK Flat',
-        location: 'Kirtipur-03, Dhalpa',
-        price: '7,000/Month',
-        status: 'Booked',
-        image: 'https://nepalpropertybazaar.com/wp-content/uploads/2024/08/1BK-Top-Floor-Brand-New-Flat-Rent-in-Bhaisepati-Nakkhu-Lalitpur-2-592x444.jpg',
-    },
-];
+const Stack = createStackNavigator(); // Use the regular stack navigator
 
-const HomeScreen = ({ navigation }) => {
-    const handlePropertyPress = (item) => {
-        Alert.alert('Property Clicked', `You clicked on ${item.type}`);
-    };
-
-    const renderItem = ({ item }) => (
-        <TouchableOpacity onPress={() => handlePropertyPress(item)}>
-            <View style={styles.propertyContainer}>
-                <Image source={{ uri: item.image }} style={styles.propertyImage} />
-                <View style={styles.propertyDetails}>
-                    <Text style={styles.propertyType}>{item.type}</Text>
-                    <Text style={styles.propertyLocation}>
-                        <Ionicons name="location-sharp" size={16} color="green" /> {item.location}
-                    </Text>
-                    <Text style={styles.propertyPrice}>Price = {item.price}</Text>
-                    <Text style={[styles.propertyStatus, { color: item.status === 'Available' ? 'green' : 'red' }]}>
-                        {item.status}
-                    </Text>
-                </View>
-            </View>
-        </TouchableOpacity>
-    );
-
+const App = () => {
     return (
-        <View style={styles.container}>
-            {/* Header */}
-            <View style={styles.header}>
-                <Ionicons name="menu" size={28} color="black" />
-                <View style={styles.locationContainer}>
-                    <Text style={styles.headerText}>Current Location</Text>
-                    <View style={styles.locationRow}>
-                        <Ionicons name="location-sharp" size={16} color="green" />
-                        <Text style={styles.locationText}>Dhobidhara</Text>
-                    </View>
-                </View>
-            </View>
-
-            <Text style={styles.sectionTitle}>Properties you have added</Text>
-
-            {/* Property List */}
-            <FlatList
-                data={properties}
-                renderItem={renderItem}
-                keyExtractor={item => item.id}
-                contentContainerStyle={styles.listContainer}
-            />
-
-        </View>
+        <NavigationContainer>
+            <Stack.Navigator 
+                initialRouteName="Home"
+                screenOptions={{
+                    headerStyle: { backgroundColor: '#f3f3f3' },
+                    headerTintColor: '#333',
+                    headerTitleStyle: { fontWeight: 'bold' },
+                }}
+            >
+                <Stack.Screen 
+                    name="Home" 
+                    component={BottomTabNavigator} 
+                    options={{ headerShown: false }}
+                />
+                <Stack.Screen 
+                    name="Profile" 
+                    component={ProfileScreen} 
+                    options={{ title: 'Profile' }}
+                />
+                <Stack.Screen 
+                    name="EditProfile" 
+                    component={EditProfileScreen} 
+                    options={{ title: 'Edit Profile' }}
+                />
+                <Stack.Screen 
+                    name="ChangePassword" 
+                    component={ChangePasswordScreen} 
+                    options={{ title: 'Change Password' }}
+                />
+                <Stack.Screen 
+                    name="Settings" 
+                    component={SettingsScreen} 
+                    options={{ title: 'Settings' }}
+                />
+                <Stack.Screen 
+                    name="AboutUs" 
+                    component={AboutUsScreen} 
+                    options={{ title: 'About Us' }}
+                />
+                <Stack.Screen 
+                    name="PrivacyPolicy" 
+                    component={PrivacyPolicyScreen} 
+                    options={{ title: 'Privacy Policy' }}
+                />
+                <Stack.Screen 
+                    name="PropertyDescription" 
+                    component={PropertyDescription} 
+                    options={{ title: 'Property Details' }}
+                />
+                <Stack.Screen 
+                    name="EditProperty" 
+                    component={EditPropertyScreen}  // Add EditPropertyScreen to the stack
+                    options={{ title: 'Edit Property' }}
+                />
+            </Stack.Navigator>
+        </NavigationContainer>
     );
 };
 
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        backgroundColor: '#f5f5f5',
-    },
-    header: {
-        padding: 10,
-        backgroundColor: '#e0e0ff',
-        flexDirection: 'row',
-        alignItems: 'center',
-    },
-    locationContainer: {
-        padding: 20,
-        marginLeft: 8,
-    },
-    headerText: {
-        fontSize: 15,
-        color: 'grey',
-    },
-    locationRow: {
-        flexDirection: 'row',
-        alignItems: 'center',
-        marginTop: 2,
-    },
-    locationText: {
-        fontSize: 16,
-        color: 'black',
-        marginLeft: 4,
-    },
-    sectionTitle: {
-        fontSize: 18,
-        fontWeight: 'bold',
-        paddingHorizontal: 16,
-        marginVertical: 10,
-    },
-    listContainer: {
-        padding: 16,
-    },
-    propertyContainer: {
-        flexDirection: 'row',
-        backgroundColor: 'white',
-        borderRadius: 10,
-        marginBottom: 16,
-        padding: 10,
-        shadowColor: '#000',
-        shadowOpacity: 0.2,
-        shadowRadius: 5,
-        shadowOffset: { width: 0, height: 2 },
-        elevation: 5,
-    },
-    propertyImage: {
-        width: 80,
-        height: 80,
-        borderRadius: 10,
-        marginRight: 16,
-    },
-    propertyDetails: {
-        flex: 1,
-    },
-    propertyType: {
-        fontSize: 18,
-        fontWeight: 'bold',
-        marginBottom: 4,
-    },
-    propertyLocation: {
-        fontSize: 14,
-        color: 'grey',
-        marginVertical: 4,
-    },
-    propertyPrice: {
-        fontSize: 14,
-        color: '#333',
-    },
-    propertyStatus: {
-        marginTop: 4,
-        fontSize: 14,
-        fontWeight: 'bold',
-    },
-    bottomNavigation: {
-        flexDirection: 'row',
-        justifyContent: 'space-around',
-        backgroundColor: '#e0e0e0',
-        padding: 12,
-    },
-});
-
-export default HomeScreen;
+export default App;
