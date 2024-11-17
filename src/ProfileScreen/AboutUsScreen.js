@@ -11,7 +11,7 @@ const AboutUsScreen = () => {
             />
 
             {/* Welcome Message */}
-            <Text style={styles.title}>Welcome to Find My App</Text>
+            <Text style={styles.title}>Welcome to Find My Room App</Text>
 
             {/* Info Box */}
             <View style={styles.infoBox}>

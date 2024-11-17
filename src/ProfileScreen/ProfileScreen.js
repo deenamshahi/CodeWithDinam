@@ -104,7 +104,7 @@ const ProfileScreen = () => {
                 <TouchableOpacity style={styles.option} onPress={handleEditProfile}>
                     <View style={styles.optionContent}>
                         <Icon name="pencil" size={20} color="#333" style={styles.icon} />
-                        <Text style={styles.optionText}>Edit Profile</Text>
+                        <Text style={styles.optionText}>Edit</Text>
                     </View>
                     <Text style={styles.arrow}>›</Text>
                 </TouchableOpacity>

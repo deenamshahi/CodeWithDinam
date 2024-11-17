@@ -38,21 +38,7 @@ const SettingsScreen = () => {
         <View style={styles.container}>
             <Text style={styles.sectionTitle}>Settings</Text>
             
-            <View style={styles.optionContainer}>
-                <Text style={styles.optionText}>Enable Notifications</Text>
-                <Switch
-                    value={isNotificationsEnabled}
-                    onValueChange={toggleNotifications}
-                />
-            </View>
-            
-            <View style={styles.optionContainer}>
-                <Text style={styles.optionText}>Dark Theme</Text>
-                <Switch
-                    value={isDarkTheme}
-                    onValueChange={toggleTheme}
-                />
-            </View>
+        
 
             <TouchableOpacity style={styles.optionContainer} onPress={handlePrivacyPolicy}>
                 <View style={styles.optionContent}>
